@@ -6,19 +6,20 @@ module.exports.searchQuery = (req, res) => {
     const min_duration = req.body.min_duration
     const max_duration = req.body.max_duration
     const guests = req.body.guests;
-    var searchQuery = `SELECT t1.*,l.name AS location_name FROM (SELECT * FROM packages_db AS p WHERE p.location=${location} AND p.category=${activity} AND p.duration > ${min_duration}  AND p.duration<${max_duration} AND p.max_guests>${guests}) t1 JOIN locations_db AS l ON l.id=t1.location`
+    console.log(location, activity, min_duration, max_duration, guests)
+    var searchQuery = `SELECT t1.*,l.name AS location_name FROM (SELECT * FROM packages_db AS p WHERE p.location=${location} AND p.category=${activity} AND p.duration >= ${min_duration}  AND p.duration<=${max_duration} AND p.max_guests>${guests}) t1 JOIN locations_db AS l ON l.id=t1.location`
 
-    if (guests === '') {
-        searchQuery = `SELECT t1.*,l.name AS location_name FROM (SELECT * FROM packages_db AS p WHERE p.location=${location} AND p.category=${activity} AND p.duration > ${min_duration}  AND p.duration < ${max_duration}) AS t1 JOIN locations_db AS l ON l.id=t1.location`
+    // if (guests === '') {
+    //     searchQuery = `SELECT t1.*,l.name AS location_name FROM (SELECT * FROM packages_db AS p WHERE p.location=${location} AND p.category=${activity} AND p.duration > ${min_duration}  AND p.duration < ${max_duration}) AS t1 JOIN locations_db AS l ON l.id=t1.location`
 
-    } else if (min_duration === '' && max_duration === '') {
-        var searchQuery = `SELECT t1.*,l.name AS location_name FROM (SELECT * FROM packages_db AS p WHERE p.location=${location} AND p.category=${activity} AND p.max_guests>${guests}) t1 JOIN locations_db AS l ON l.id=t1.location`
-    }
-    else if (activity === '') {
-        var searchQuery = `SELECT t1.*,l.name AS location_name FROM (SELECT * FROM packages_db AS p WHERE p.location=${location} AND p.duration > ${min_duration}  AND p.duration<${max_duration} AND p.max_guests>${guests}) t1 JOIN locations_db AS l ON l.id=t1.location`
-    } else if (location === '') {
-        var searchQuery = `SELECT t1.*,l.name AS location_name FROM (SELECT * FROM packages_db AS p WHERE p.category=${activity} AND p.duration > ${min_duration}  AND p.duration<${max_duration} AND p.max_guests>${guests}) t1 JOIN locations_db AS l ON l.id=t1.location`
-    }
+    // } else if (min_duration === '' && max_duration === '') {
+    //     var searchQuery = `SELECT t1.*,l.name AS location_name FROM (SELECT * FROM packages_db AS p WHERE p.location=${location} AND p.category=${activity} AND p.max_guests>${guests}) t1 JOIN locations_db AS l ON l.id=t1.location`
+    // }
+    // else if (activity === '') {
+    //     var searchQuery = `SELECT t1.*,l.name AS location_name FROM (SELECT * FROM packages_db AS p WHERE p.location=${location} AND p.duration > ${min_duration}  AND p.duration<${max_duration} AND p.max_guests>${guests}) t1 JOIN locations_db AS l ON l.id=t1.location`
+    // } else if (location === '') {
+    //     var searchQuery = `SELECT t1.*,l.name AS location_name FROM (SELECT * FROM packages_db AS p WHERE p.category=${activity} AND p.duration > ${min_duration}  AND p.duration<${max_duration} AND p.max_guests>${guests}) t1 JOIN locations_db AS l ON l.id=t1.location`
+    // }
 
     db.query(searchQuery, (err, result) => {
         if (err) {

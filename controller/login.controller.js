@@ -60,7 +60,7 @@ module.exports.login = (req, res) => {
             }
             if (bResult) {
                 // If password match
-                const token = jwt.sign({ id: result[0].id }, process.env.SECERT_KEY)
+                const token = jwt.sign({ id: result[0].id, role: 'admin' }, process.env.SECERT_KEY)
                 // Sending success repsonse
                 return res.status(200).json({ msg: "Login Successfully", token, user: { id: result[0].id, role: result[0].role } })
             }

@@ -22,7 +22,7 @@ app.use(express.static(path.resolve('./public')));
 
 app.use(cors({
     credentials: true,
-    origin: ['http://localhost:3000', 'your-production-domain']
+    origin: ['http://localhost:3000', 'http://localhost:3001', 'your-production-domain']
 }));
 // app.use(function (req, res, next) {
 //     res.header('Access-Control-Allow-Origin', '*');
@@ -74,3 +74,6 @@ app.use(userLoginRoutes);
 
 const bookingRoutes = require('./route/booking.route');
 app.use(bookingRoutes);
+
+const wishlistRoutes = require('./route/wishlist.routes');
+app.use(wishlistRoutes);

@@ -92,7 +92,7 @@ module.exports.update_package = (req, res) => {
                 req.body.dayBreak[0].day !== '' &&
 
                     req.body.dayBreak.map((da, index) => {
-                        const insertQuery = `INSERT INTO package_daybreak_db(package,day,description) VALUES ('${id}','${da.day}','${da.description}')`
+                        const insertQuery = `INSERT INTO package_daybreak_db(package,day,description) VALUES ('${id}','${da.day}',"${da.description}")`
                         db.query(insertQuery, (err, result) => {
                             if (err) {
                                 throw err
